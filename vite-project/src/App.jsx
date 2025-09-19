@@ -19,8 +19,6 @@ const MyBooks = lazy(() => import("./pages/MyBooks"));
 
 function AppContent() {
   const location = useLocation();
-
-  // Pages where Navbar and Footer should be hidden
   const hideNavOn = ["/login", "/register"];
   const hideNav = hideNavOn.includes(location.pathname);
 
@@ -30,7 +28,7 @@ function AppContent() {
       <main className="container">
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            {/* Default redirect */}
+            {/* Redirect default path */}
             <Route path="/" element={<Navigate to="/login" />} />
 
             {/* Auth pages */}
@@ -40,51 +38,27 @@ function AppContent() {
             {/* Protected pages */}
             <Route
               path="/home"
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
+              element={<ProtectedRoute><Home /></ProtectedRoute>}
             />
             <Route
               path="/books"
-              element={
-                <ProtectedRoute>
-                  <Books />
-                </ProtectedRoute>
-              }
+              element={<ProtectedRoute><Books /></ProtectedRoute>}
             />
             <Route
               path="/books/:id"
-              element={
-                <ProtectedRoute>
-                  <BookDetails />
-                </ProtectedRoute>
-              }
+              element={<ProtectedRoute><BookDetails /></ProtectedRoute>}
             />
             <Route
               path="/cart"
-              element={
-                <ProtectedRoute>
-                  <Cart />
-                </ProtectedRoute>
-              }
+              element={<ProtectedRoute><Cart /></ProtectedRoute>}
             />
             <Route
               path="/mybooks"
-              element={
-                <ProtectedRoute>
-                  <MyBooks />
-                </ProtectedRoute>
-              }
+              element={<ProtectedRoute><MyBooks /></ProtectedRoute>}
             />
             <Route
               path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
+              element={<ProtectedRoute><Profile /></ProtectedRoute>}
             />
 
             {/* Public pages */}
@@ -101,6 +75,4 @@ function AppContent() {
   );
 }
 
-export default function App() {
-  return <AppContent />;
-}
+export default AppContent;

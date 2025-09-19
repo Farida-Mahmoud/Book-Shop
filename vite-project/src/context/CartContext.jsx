@@ -7,43 +7,34 @@ export function useCart() {
 }
 
 export function CartProvider({ children }) {
-  const [items, setItems] = useState(() => {
+  const [cart, setCart] = useState(() => {
     const raw = localStorage.getItem("cart");
     return raw ? JSON.parse(raw) : [];
   });
 
-  function persist(next) {
-    setItems(next);
+  const persist = (next) => {
+    setCart(next);
     localStorage.setItem("cart", JSON.stringify(next));
-  }
+  };
 
-  function addItem(book) {
-    const existing = items.find((i) => i.id === book.id);
+  const addItem = (book) => {
+    const existing = cart.find((i) => i.id === book.id);
     if (existing) {
-      const next = items.map((i) =>
+      persist(cart.map((i) =>
         i.id === book.id ? { ...i, qty: i.qty + 1 } : i
-      );
-      persist(next);
+      ));
     } else {
-      persist([...items, { ...book, qty: 1 }]);
+      persist([...cart, { ...book, qty: 1 }]);
     }
-  }
+  };
 
-  function removeItem(id) {
-    const next = items.filter((i) => i.id !== id);
-    persist(next);
-  }
+  const removeItem = (id) => persist(cart.filter((i) => i.id !== id));
+  const clearCart = () => persist([]);
+  const updateQty = (id, qty) => persist(cart.map((i) => i.id === id ? { ...i, qty } : i));
 
-  function clearCart() {
-    persist([]);
-  }
-
-  function updateQty(id, qty) {
-    const next = items.map((i) => (i.id === id ? { ...i, qty } : i));
-    persist(next);
-  }
-
-  const value = { cart: items, addItem, removeItem, clearCart, updateQty };
-
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider value={{ cart, addItem, removeItem, clearCart, updateQty }}>
+      {children}
+    </CartContext.Provider>
+  );
 }
