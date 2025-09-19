@@ -10,9 +10,9 @@ createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HashRouter>
       <AuthProvider>
-        <CartProvider>
+        <StoreProvider>
           <App />
-        </CartProvider>
+        </StoreProvider>
       </AuthProvider>
     </HashRouter>
   </React.StrictMode>
