@@ -3,5 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/Book-Shop/"
+  base: process.env.VITE_BASE_PATH || "/Book-Shop"
 });
