@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+// Lazy-loaded pages
 const Home = lazy(() => import("./pages/Home"));
 const Books = lazy(() => import("./pages/Books"));
 const BookDetails = lazy(() => import("./pages/BookDetails"));
@@ -18,6 +19,8 @@ const MyBooks = lazy(() => import("./pages/MyBooks"));
 
 function AppContent() {
   const location = useLocation();
+
+  // Pages where Navbar and Footer should be hidden
   const hideNavOn = ["/login", "/register"];
   const hideNav = hideNavOn.includes(location.pathname);
 
@@ -27,13 +30,14 @@ function AppContent() {
       <main className="container">
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
+            {/* Default redirect */}
             <Route path="/" element={<Navigate to="/login" />} />
 
-            {/* Auth */}
+            {/* Auth pages */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            {/* Protected */}
+            {/* Protected pages */}
             <Route
               path="/home"
               element={
@@ -83,9 +87,11 @@ function AppContent() {
               }
             />
 
-            {/* Public */}
+            {/* Public pages */}
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<ContactUs />} />
+
+            {/* 404 */}
             <Route path="*" element={<div>Page not found</div>} />
           </Routes>
         </Suspense>
