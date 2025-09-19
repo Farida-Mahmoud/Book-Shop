@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
+
 export function useCart() {
   return useContext(CartContext);
 }
@@ -42,7 +43,7 @@ export function CartProvider({ children }) {
     persist(next);
   }
 
-  const value = { items, addItem, removeItem, clearCart, updateQty };
+  const value = { cart: items, addItem, removeItem, clearCart, updateQty };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
