@@ -4,6 +4,8 @@ import { HashRouter } from "react-router-dom";  // Use HashRouter for deployment
 import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
+import { StoreProvider } from "./context/StoreContext";
+
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
