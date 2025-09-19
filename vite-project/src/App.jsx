@@ -4,9 +4,7 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider } from "./context/AuthContext";
-import { StoreProvider } from "./context/StoreContext";
-import "./App.css";
+
 const Home = lazy(() => import("./pages/Home"));
 const Books = lazy(() => import("./pages/Books"));
 const BookDetails = lazy(() => import("./pages/BookDetails"));
@@ -17,7 +15,6 @@ const Profile = lazy(() => import("./pages/Profile"));
 const About = lazy(() => import("./pages/About"));
 const ContactUs = lazy(() => import("./pages/ContactUs"));
 const MyBooks = lazy(() => import("./pages/MyBooks"));
- // <- import your single merged CSS
 
 function AppContent() {
   const location = useLocation();
@@ -37,13 +34,56 @@ function AppContent() {
             <Route path="/register" element={<Register />} />
 
             {/* Protected */}
-            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/books" element={<ProtectedRoute><Books /></ProtectedRoute>} />
-            <Route path="/books/:id" element={<ProtectedRoute><BookDetails /></ProtectedRoute>} />
-            <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-            <Route path="/mybooks" element={<ProtectedRoute><MyBooks /></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/books"
+              element={
+                <ProtectedRoute>
+                  <Books />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/books/:id"
+              element={
+                <ProtectedRoute>
+                  <BookDetails />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/cart"
+              element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/mybooks"
+              element={
+                <ProtectedRoute>
+                  <MyBooks />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
 
+            {/* Public */}
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="*" element={<div>Page not found</div>} />
@@ -56,11 +96,5 @@ function AppContent() {
 }
 
 export default function App() {
-  return (
-    <AuthProvider>
-      <StoreProvider>
-        <AppContent />
-      </StoreProvider>
-    </AuthProvider>
-  );
+  return <AppContent />;
 }
